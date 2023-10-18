@@ -1,38 +1,3 @@
-{{-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">{{config('app.name')}}</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{{route('home')}}">Home</a>
-        </li>
-        @auth
-        <li class="nav-item">
-          <a class="nav-link" href="{{route('logout')}}">Logout</a>
-        </li>
-        <li class="nav-item">
-          <span class="nav-link d-flex ">
-            {{auth()->user()->name}}
-        </span>
-        </li>
-        @else
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('login')}}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('register')}}">Register</a>
-          </li>
-        @endauth
-      </ul>
-      <div class="d-flex">
-      </div>
-    </div>
-  </div>
-</nav> --}}
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">

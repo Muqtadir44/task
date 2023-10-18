@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,3 +30,6 @@ Route::controller(SettingController::class)->group(function(){
         Route::get('/delete','delete_profile')->name('delete.profile');
     });
 });
+
+Route::post('/add_product',[ProductController::class,'add_product'])->name('add_product');
+Route::get('/all_products',[ProductController::class,'all_products'])->name('all_products');
