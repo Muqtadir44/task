@@ -10,52 +10,51 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3>Product</h3>
-                    <!-- Button trigger modal -->
+                    <!-- Add Product Modal Button -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Add Product <i class="fa-solid fa-circle-plus"></i>
+                        <i class="fa-solid fa-circle-plus"></i> Add Product
                     </button>
-                    
-                    <!-- Add Product Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body" id="show_all_products">
-                                <p id="msg"></p>
-                                <form action="{{route('add_product')}}" method="POST" id="add_product_form" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label for="formGroupExampleInput" class="form-label">Product Image</label>
-                                        <input type="file" name="product_image" class="form-control" id="formGroupExampleInput" placeholder="Image">
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="formGroupExampleInput2" class="form-label">Product Title</label>
-                                        <input type="text" name="product_title" class="form-control" id="formGroupExampleInput2" placeholder="product title">
-                                      </div>
-                                      <div class="mb-3">
-                                        <label for="formGroupExampleInput2" class="form-label">Product Quantity</label>
-                                        <input type="text" name="product_quantity" class="form-control" id="formGroupExampleInput2" placeholder="product quantity">
-                                      </div>
-                                      <div class="text-center">
-                                        <button type="submit" id="add_product_btn" class="btn btn-primary px-5">Add Product</button>
-                                      </div>
-                                </form>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="card-body">
+                    {{-- All Records --}}
                     <div id="records"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<!-- Add Product Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="show_all_products">
+            <p id="msg"></p>
+            <form action="{{route('add_product')}}" method="POST" id="add_product_form" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3">
+                    <label for="formGroupExampleInput" class="form-label">Product Image</label>
+                    <input type="file" name="product_image" class="form-control" id="formGroupExampleInput" placeholder="Image">
+                  </div>
+                  <div class="mb-3">
+                    <label for="formGroupExampleInput2" class="form-label">Product Title</label>
+                    <input type="text" name="product_title" class="form-control" id="formGroupExampleInput2" placeholder="product title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="formGroupExampleInput2" class="form-label">Product Quantity</label>
+                    <input type="text" name="product_quantity" class="form-control" id="formGroupExampleInput2" placeholder="product quantity">
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" id="add_product_btn" class="btn btn-primary px-5">Add Product</button>
+                  </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>
 <!-- Update Product Modal -->
 <div class="modal fade" id="edit_product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -74,7 +73,7 @@
                     <label class="form-label">Product Image</label>
                     <input type="file" name="product_image" class="form-control" id="formGroupExampleInput" placeholder="Image">
                     <div id="img">
-
+                        {{-- old Image --}}
                     </div>
                 </div>
                   <div class="mb-3">
@@ -113,25 +112,7 @@
         })
     }
 
-    $('#update_product_form').on('submit',function(e){
-        e.preventDefault();
-        var formdata = new FormData(this);
-        // console.log(formdata);
-        $.ajax({
-            url: '{{route('update_product')}}',
-            type: 'POST',
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success:function(data){
-                console.log(data);
-                if (data.status == true) {
-                    all_products();
-                }
-            }
-            
-        })
-    })
+    
 
     //----------adding product---------
     $('#add_product_form').on('submit',function(e){
@@ -175,7 +156,24 @@
         })
     });
 
-    //----- updating product
-    
+    //----- updating product ---------
+    $('#update_product_form').on('submit',function(e){
+        e.preventDefault();
+        var formdata = new FormData(this);
+        // console.log(formdata);
+        $.ajax({
+            url: '{{route('update_product')}}',
+            type: 'POST',
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success:function(data){
+                console.log(data);
+                if (data.status == true) {
+                    all_products();
+                }
+            }
+        })
+    })
 </script>
 @endsection

@@ -69,18 +69,15 @@ class ProductController extends Controller
     }
 
     public function update_product(Request $request){
-        // print_r($_POST);
-        // print_r($_FILES);
         $file_name = '';
-        $product = Product::find($request->product_id);
-
+        $product   = Product::find($request->product_id);
         if($request->hasFile('product_image')){
 
             $file = $request->file('product_image');
             $file_name = time().'.'.$request->file('product_image')->getClientOriginalExtension();
             $request->file('product_image')->storeAs('public/pictures',$file_name);
             if ($product->product_image) {
-                Storage::delete('public/pictures',$request->product_image);
+                Storage::delete('app/public/pictures/'.$request->product_image);
             }
         }else{
             $file_name = $request->product_image;
@@ -88,7 +85,7 @@ class ProductController extends Controller
         $update_product = [
             'product_image'    => $file_name,
             'product_title'    => $request->product_title,
-            'product_quantity' => $request->product_quantity
+            'product_quantity' => $request->product_quantity,
         ];
         $product->update($update_product);
         return response()->json([
