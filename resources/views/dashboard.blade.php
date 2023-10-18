@@ -66,22 +66,27 @@
         </div>
         <div class="modal-body" id="show_all_products">
             <p id="msg"></p>
-            <form action="{{route('add_product')}}" method="POST" id="add_product_form" enctype="multipart/form-data">
+            <form action="{{route('update_product')}}" method="POST" id="update_product_form" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label for="formGroupExampleInput" class="form-label">Product Image</label>
+                    <input type="hidden" name="product_id" id="product_id">
+                    <input type="hidden" name="product_image" id="product_image">
+                    <label class="form-label">Product Image</label>
                     <input type="file" name="product_image" class="form-control" id="formGroupExampleInput" placeholder="Image">
+                    <div id="img">
+
+                    </div>
+                </div>
+                  <div class="mb-3">
+                    <label  class="form-label">Product Title</label>
+                    <input type="text" name="product_title" class="form-control" id="product_title" placeholder="product title">
                   </div>
                   <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Product Title</label>
-                    <input type="text" name="product_title" class="form-control" id="formGroupExampleInput2" placeholder="product title">
-                  </div>
-                  <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Product Quantity</label>
-                    <input type="text" name="product_quantity" class="form-control" id="formGroupExampleInput2" placeholder="product quantity">
+                    <label  class="form-label">Product Quantity</label>
+                    <input type="text" name="product_quantity" class="form-control" id="product_quantity" placeholder="product quantity">
                   </div>
                   <div class="text-center">
-                    <button type="submit" id="add_product_btn" class="btn btn-primary px-5">Add Product</button>
+                    <button type="submit" id="update_product_btn" class="btn btn-primary px-5">Update Product</button>
                   </div>
             </form>
         </div>
@@ -108,6 +113,26 @@
         })
     }
 
+    $('#update_product_form').on('submit',function(e){
+        e.preventDefault();
+        var formdata = new FormData(this);
+        // console.log(formdata);
+        $.ajax({
+            url: '{{route('update_product')}}',
+            type: 'POST',
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success:function(data){
+                console.log(data);
+                if (data.status == true) {
+                    all_products();
+                }
+            }
+            
+        })
+    })
+
     //----------adding product---------
     $('#add_product_form').on('submit',function(e){
         e.preventDefault();
@@ -125,6 +150,32 @@
                 all_products();
             }
         })
-    })
+    });
+
+    //-------single product ---
+    $(document).on('click','.update-btn',function(e){
+        e.preventDefault();
+        var product_id = $(this).attr('id');
+        // console.log(product_id);
+        $.ajax({
+            url: '{{route('single_product')}}',
+            type: 'GET',
+            data:{
+                id:product_id,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(data){
+                console.log(data);
+                $('#product_title').val(data.product_title);
+                $('#product_quantity').val(data.product_quantity);
+                $('#img').html(`<img src='{{asset('storage/pictures/${data.product_image}')}}' width='100px' class='mt-2 img-fluid rounded'>`)
+                $('#product_id').val(data.id);
+                $('#product_image').val(data.product_image);
+            }
+        })
+    });
+
+    //----- updating product
+    
 </script>
 @endsection

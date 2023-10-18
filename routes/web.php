@@ -31,5 +31,10 @@ Route::controller(SettingController::class)->group(function(){
     });
 });
 
-Route::post('/add_product',[ProductController::class,'add_product'])->name('add_product');
 Route::get('/all_products',[ProductController::class,'all_products'])->name('all_products');
+
+Route::post('/add_product',[ProductController::class,'add_product'])->name('add_product');
+
+
+Route::get('/single-product',[ProductController::class,'single_product'])->name('single_product');
+Route::post('/update_product',[ProductController::class,'update_product'])->name('update_product');

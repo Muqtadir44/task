@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
         ]);
     }
 
-
+    //------ all products
     public function all_products(){
         $all_products = product::all();
         // print_r($all_products);
@@ -49,7 +50,7 @@ class ProductController extends Controller
                                     <td>".$product->product_title."</td>
                                     <td>".$product->product_quantity."</td>
                                     <td>
-                                        <a href='' id='".$product->id."' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edit_product'>Edit</a>
+                                        <a href='' id='".$product->id."' class='btn btn-success update-btn' data-bs-toggle='modal' data-bs-target='#edit_product'>Edit</a>
                                     </td>
                                     </tr>";
                     }
@@ -58,5 +59,40 @@ class ProductController extends Controller
         }else{
             echo '<h1 class="text-danger text-center">No Record Found</h1>';
         }
+    }
+
+
+    public function single_product(Request $request){
+        $id      = $request->id;
+        $product = Product::find($id);
+        return response()->json($product);
+    }
+
+    public function update_product(Request $request){
+        // print_r($_POST);
+        // print_r($_FILES);
+        $file_name = '';
+        $product = Product::find($request->product_id);
+
+        if($request->hasFile('product_image')){
+
+            $file = $request->file('product_image');
+            $file_name = time().'.'.$request->file('product_image')->getClientOriginalExtension();
+            $request->file('product_image')->storeAs('public/pictures',$file_name);
+            if ($product->product_image) {
+                Storage::delete('public/pictures',$request->product_image);
+            }
+        }else{
+            $file_name = $request->product_image;
+        }
+        $update_product = [
+            'product_image'    => $file_name,
+            'product_title'    => $request->product_title,
+            'product_quantity' => $request->product_quantity
+        ];
+        $product->update($update_product);
+        return response()->json([
+            'status' => true
+        ]);
     }
 }
