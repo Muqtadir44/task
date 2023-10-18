@@ -7,9 +7,9 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h3>Product</h3>
+            <div class="card border-primary">
+                <div class="card-header d-flex justify-content-between align-items-center bg-primary">
+                    <h3 class="text-light">Products - Listing</h3>
                     <!-- Add Product Modal Button -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <i class="fa-solid fa-circle-plus"></i> Add Product

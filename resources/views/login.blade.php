@@ -17,11 +17,11 @@
               <form action="{{route('login.process')}}" method="POST">
                   @csrf
                 <div class="form-floating">
-                  <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+                  <input type="email" class="form-control @error('email') is-invalid @enderror" id="floatingInput" name="email" placeholder="name@example.com">
                   <label for="floatingInput">Email address</label>
                 </div>
                 <div class="form-floating mt-2">
-                  <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+                  <input type="password" class="form-control @error('email') is-invalid @enderror" name="password" id="floatingPassword" placeholder="Password">
                   <label for="floatingPassword">Password</label>
                 </div>
                 <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Sign in</button>

@@ -32,7 +32,7 @@ class ProductController extends Controller
         // print_r($all_products);
         $output = '';
         if ($all_products->count() > 0) {
-            $output .= "<table class='table table-striped table-sm text-center align-middle'>
+            $output .= "<table class='table table-striped table-sm'>
                     <thead>
                         <tr>
                             <th>ID</th>
