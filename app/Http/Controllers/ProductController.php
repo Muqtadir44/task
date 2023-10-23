@@ -31,6 +31,7 @@ class ProductController extends Controller
         $all_products = product::all();
         // print_r($all_products);
         $output = '';
+        $counter = 0;
         if ($all_products->count() > 0) {
             $output .= "<table class='table table-striped table-sm'>
                     <thead>
