@@ -37,19 +37,22 @@
                 @csrf
                 <div class="mb-3">
                     <label for="formGroupExampleInput" class="form-label">Product Image</label>
-                    <input type="file" name="product_image" class="form-control" id="formGroupExampleInput" placeholder="Image">
-                  </div>
-                  <div class="mb-3">
+                    <input type="file" name="product_image" class="form-control" id="formGroupExampleInput" placeholder="Image">   
+                    <p id="product_image_msg" class="text-danger"></p>
+                </div>
+                <div class="mb-3">
                     <label for="formGroupExampleInput2" class="form-label">Product Title</label>
                     <input type="text" name="product_title" class="form-control" id="formGroupExampleInput2" placeholder="product title">
-                  </div>
-                  <div class="mb-3">
+                    <p id="product_title_msg" class="text-danger"></p>
+                </div>
+                <div class="mb-3">
                     <label for="formGroupExampleInput2" class="form-label">Product Quantity</label>
                     <input type="text" name="product_quantity" class="form-control" id="formGroupExampleInput2" placeholder="product quantity">
-                  </div>
-                  <div class="text-center">
+                    <p id="product_quantity_msg" class="text-danger"></p>
+                </div>
+                <div class="text-center">
                     <button type="submit" id="add_product_btn" class="btn btn-primary px-5">Add Product</button>
-                  </div>
+                </div>
             </form>
         </div>
     </div>
@@ -79,7 +82,8 @@
                   <div class="mb-3">
                     <label  class="form-label">Product Title</label>
                     <input type="text" name="product_title" class="form-control" id="product_title" placeholder="product title">
-                  </div>
+                    
+                </div>
                   <div class="mb-3">
                     <label  class="form-label">Product Quantity</label>
                     <input type="text" name="product_quantity" class="form-control" id="product_quantity" placeholder="product quantity">
@@ -117,20 +121,54 @@
     //----------adding product---------
     $('#add_product_form').on('submit',function(e){
         e.preventDefault();
-        // alert('working');
+        var flag = true;
         var formdata = new FormData(this);
-        console.log(formdata);
-        $.ajax({
-            url: "{{route('add_product')}}",
-            type: 'POST',
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success:function(data){
-                console.log(data);
-                all_products();
-            }
-        })
+        var product_title = formdata.get('product_title');
+        var product_qtn   = formdata.get('product_quantity');
+        var product_image = formdata.get('product_image');
+        var file_extensions  = /(.jpg|.jpeg|.png)$/;
+    	var max_size = 1024 * 1024;
+
+        if (product_title == "") {
+            flag = false;
+            console.log('required');
+            document.getElementById("product_title_msg").innerHTML = 'required';
+        }else{
+            document.getElementById("product_title_msg").innerHTML = '';
+        }
+        if (product_qtn == "") {
+            flag = false;
+            document.getElementById("product_quantity_msg").innerHTML = 'required';
+        }else{
+            document.getElementById("product_quantity_msg").innerHTML = '';
+        }
+        if (!product_image) {
+		flag = false;
+        document.getElementById('product_image_msg').innerHTML = 'Please Enter your profile picture';
+	}else{
+        document.getElementById('product_image_msg').innerHTML = "";
+		if (!file_extensions.test(product_image.name)) {
+			$flag = false;
+            document.getElementById('product_image_msg').innerHTML = "file type should be jpg/jpeg/png only";
+		}
+		if (product_image.size > max_size) {
+			$flag = false;
+            document.getElementById('product_image_msg').innerHTML = "max file size 1MB only";
+		}
+	}
+        if (flag) {
+            $.ajax({
+                url: "{{route('add_product')}}",
+                type: 'POST',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success:function(data){
+                    console.log(data);
+                    all_products();
+                }
+            })
+        }
     });
 
     //-------single product ---
