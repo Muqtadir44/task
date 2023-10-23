@@ -131,7 +131,6 @@
 
         if (product_title == "") {
             flag = false;
-            console.log('required');
             document.getElementById("product_title_msg").innerHTML = 'required';
         }else{
             document.getElementById("product_title_msg").innerHTML = '';
@@ -142,7 +141,7 @@
         }else{
             document.getElementById("product_quantity_msg").innerHTML = '';
         }
-        if (!product_image) {
+        if (!product_image.name) {
 		flag = false;
         document.getElementById('product_image_msg').innerHTML = 'Please Enter your profile picture';
 	}else{
