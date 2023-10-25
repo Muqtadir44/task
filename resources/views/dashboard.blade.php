@@ -17,7 +17,16 @@
                 </div>
                 <div class="card-body">
                     {{-- All Records --}}
-                    <div id="records"></div>
+                    <table id="product_table" class="table table-bordered">
+                        <thead>
+                            <th>Id</th>
+                            <th>Product Image</th>
+                            <th>Product Name</th>
+                            <th>Product Quantity</th>
+                            <th>Action</th>
+                        </thead>
+                    </table>
+                    {{-- <div id="records"></div> --}}
                 </div>
             </div>
         </div>
@@ -101,22 +110,23 @@
 <script>
     //----------fetching records-------
     all_products();
-
     function all_products(){
-        $.ajax({
-            url: '{{route('all_products')}}',
-            method: 'GET',
-            success: function(data){
-                // console.log(data);
-                $('#records').html(data);
-                $('table').DataTable({
-                    order: [0 , 'desc']
-                })
-            }
+        $(document).ready(function(){
+            $('#product_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('all_products') !!}',
+                columns: [
+                    {data: 'id', name: 'id', searchable: false},
+                    {data: 'product_image', name: 'product_image', searchable: false},
+                    {data: 'product_title', name: 'Product_title', searchable: true},
+                    {data: 'product_quantity', name: 'Product_quantity', searchable: false},
+                    {data: 'action', name: 'action'}
+                ]
+            });
         })
-    }
 
-    
+    }    
 
     //----------adding product---------
     $('#add_product_form').on('submit',function(e){
@@ -163,7 +173,9 @@
                 processData: false,
                 contentType: false,
                 success:function(data){
-                    console.log(data);
+                    // console.log(data);
+                     var table = $('#product_table').DataTable();
+                    table.destroy();
                     all_products();
                 }
             })
@@ -207,6 +219,8 @@
             success:function(data){
                 console.log(data);
                 if (data.status == true) {
+                    var table = $('#product_table').DataTable();
+                    table.destroy();
                     all_products();
                 }
             }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+// use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -27,40 +29,55 @@ class ProductController extends Controller
     }
 
     //------ all products
-    public function all_products(){
-        $all_products = product::all();
-        // print_r($all_products);
-        $output = '';
-        if ($all_products->count() > 0) {
-            $output .= "<table class='table table-striped table-sm'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Product Image</th>
-                            <th>Product Name</th>
-                            <th>Product Quantity</th>
-                            <th>Action</th>
-                        </tr>    
-                    </thead>
-                    <tbody>";
-                    foreach($all_products as $product){
-                        $output .= "<tr>
-                                    <td>".$product->id."</td>
-                                    <td><img src='storage/pictures/".$product->product_image."' width='50px' class='image-fluid rounded'></td>
-                                    <td>".$product->product_title."</td>
-                                    <td>".$product->product_quantity."</td>
-                                    <td>
-                                        <a href='' id='".$product->id."' class='btn btn-success update-btn' data-bs-toggle='modal' data-bs-target='#edit_product'>Edit</a>
-                                    </td>
-                                    </tr>";
-                    }
-                    $output .= "</tbody></table>";
-                    echo $output;
-        }else{
-            echo '<h1 class="text-danger text-center">No Record Found</h1>';
-        }
-    }
+    // public function all_products(){
+    //     $all_products = product::all();
+    //     // print_r($all_products);
+    //     $output = '';
+    //     if ($all_products->count() > 0) {
+    //         $output .= "<table class='table table-striped table-sm'>
+    //                 <thead>
+    //                     <tr>
+    //                         <th>ID</th>
+    //                         <th>Product Image</th>
+    //                         <th>Product Name</th>
+    //                         <th>Product Quantity</th>
+    //                         <th>Action</th>
+    //                     </tr>    
+    //                 </thead>
+    //                 <tbody>";
+    //                 foreach($all_products as $product){
+    //                     $output .= "<tr>
+    //                                 <td>".$product->id."</td>
+    //                                 <td><img src='storage/pictures/".$product->product_image."' width='50px' class='image-fluid rounded'></td>
+    //                                 <td>".$product->product_title."</td>
+    //                                 <td>".$product->product_quantity."</td>
+    //                                 <td>
+    //                                     <a href='' id='".$product->id."' class='btn btn-success update-btn' data-bs-toggle='modal' data-bs-target='#edit_product'>Edit</a>
+    //                                 </td>
+    //                                 </tr>";
+    //                 }
+    //                 $output .= "</tbody></table>";
+    //                 echo $output;
+    //     }else{
+    //         echo '<h1 class="text-danger text-center">No Record Found</h1>';
+    //     }
+    // }
 
+    public function all_products(){
+        
+        $data = product::query()->get();
+        return DataTables::of($data)->addIndexColumn()
+            ->editColumn('product_image', function ($data) {
+                $image = "<img src='storage/pictures/".$data->product_image."' width='50px' class='image-fluid rounded'>";
+                return $image;
+            })
+            ->addColumn('action', function($data){
+                $button = '<button type="button" name="edit" id="'.$data->id.'" data-bs-toggle="modal" data-bs-target="#edit_product" class="update-btn btn btn-success btn-sm"> <i class="fa-solid fa-pen"></i></button>';
+                return $button;
+            })
+            ->rawColumns(['action', 'product_image'])
+            ->make(true);
+    }
 
     public function single_product(Request $request){
         $id      = $request->id;
@@ -73,7 +90,7 @@ class ProductController extends Controller
         $product   = Product::find($request->product_id);
         if($request->hasFile('product_image')){
 
-            $file = $request->file('product_image');
+            $file      = $request->file('product_image');
             $file_name = time().'.'.$request->file('product_image')->getClientOriginalExtension();
             $request->file('product_image')->storeAs('public/pictures',$file_name);
             if ($product->product_image) {
