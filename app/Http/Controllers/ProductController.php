@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-// use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -28,41 +27,7 @@ class ProductController extends Controller
         ]);
     }
 
-    //------ all products
-    // public function all_products(){
-    //     $all_products = product::all();
-    //     // print_r($all_products);
-    //     $output = '';
-    //     if ($all_products->count() > 0) {
-    //         $output .= "<table class='table table-striped table-sm'>
-    //                 <thead>
-    //                     <tr>
-    //                         <th>ID</th>
-    //                         <th>Product Image</th>
-    //                         <th>Product Name</th>
-    //                         <th>Product Quantity</th>
-    //                         <th>Action</th>
-    //                     </tr>    
-    //                 </thead>
-    //                 <tbody>";
-    //                 foreach($all_products as $product){
-    //                     $output .= "<tr>
-    //                                 <td>".$product->id."</td>
-    //                                 <td><img src='storage/pictures/".$product->product_image."' width='50px' class='image-fluid rounded'></td>
-    //                                 <td>".$product->product_title."</td>
-    //                                 <td>".$product->product_quantity."</td>
-    //                                 <td>
-    //                                     <a href='' id='".$product->id."' class='btn btn-success update-btn' data-bs-toggle='modal' data-bs-target='#edit_product'>Edit</a>
-    //                                 </td>
-    //                                 </tr>";
-    //                 }
-    //                 $output .= "</tbody></table>";
-    //                 echo $output;
-    //     }else{
-    //         echo '<h1 class="text-danger text-center">No Record Found</h1>';
-    //     }
-    // }
-
+    //------ all products ----
     public function all_products(){
         
         $data = product::query()->get();
@@ -79,12 +44,14 @@ class ProductController extends Controller
             ->make(true);
     }
 
+    // ----  Single product  ----
     public function single_product(Request $request){
         $id      = $request->id;
         $product = Product::find($id);
         return response()->json($product);
     }
 
+    // ----  updating product  ----
     public function update_product(Request $request){
         $file_name = '';
         $product   = Product::find($request->product_id);
