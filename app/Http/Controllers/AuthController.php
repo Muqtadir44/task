@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\DataTables\ProductsDataTable;
 
 class AuthController extends Controller
 {
@@ -28,8 +29,8 @@ class AuthController extends Controller
         }
         return redirect()->route('login',['msg'=>'Invalid Email or Password','color'=>'text-danger']);
     }
-
-    public function dashboard(){
+    public function dashboard(ProductsDataTable $dataTable){
+        return $dataTable->render('dashboard');
         return view('dashboard');
     }
 

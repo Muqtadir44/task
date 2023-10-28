@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ProductsDataTable;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
+
+
 class ProductController extends Controller
 {
+
+    // public function records(ProductsDataTable $dataTable){
+    //     return $dataTable->render('records');
+    // }
     public function add_product(Request $request){
    
         $request->file('product_image');
@@ -29,7 +36,7 @@ class ProductController extends Controller
 
     //------ all products ----
     public function all_products(){
-        
+        // return $dataTable->render('dashboard');
         $data = product::query()->get();
         return DataTables::of($data)->addIndexColumn()
             ->editColumn('product_image', function ($data) {

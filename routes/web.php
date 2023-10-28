@@ -38,3 +38,5 @@ Route::post('/add_product',[ProductController::class,'add_product'])->name('add_
 
 Route::get('/single-product',[ProductController::class,'single_product'])->name('single_product');
 Route::post('/update_product',[ProductController::class,'update_product'])->name('update_product');
+
+
