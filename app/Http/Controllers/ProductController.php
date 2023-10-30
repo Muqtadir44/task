@@ -58,6 +58,7 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
+
     // ----  updating product  ----
     public function update_product(Request $request){
         $file_name = '';
@@ -80,7 +81,7 @@ class ProductController extends Controller
         ];
         $product->update($update_product);
         return response()->json([
-            'status' => true
+            'status' =>     true
         ]);
     }
     
