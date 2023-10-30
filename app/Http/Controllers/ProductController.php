@@ -57,7 +57,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         return response()->json($product);
     }
-
+    
 
     // ----  updating product  ----
     public function update_product(Request $request){
@@ -81,7 +81,7 @@ class ProductController extends Controller
         ];
         $product->update($update_product);
         return response()->json([
-            'status' =>     true
+            'status' => true
         ]);
     }
     

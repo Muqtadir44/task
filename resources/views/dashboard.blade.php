@@ -109,6 +109,7 @@
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js" defer></script>
+
 <script>
     //----------fetching records-------
 
@@ -181,6 +182,7 @@
                      var table = $('#product_table').DataTable();
                     table.destroy();
                     all_products();
+                    $('#exampleModal').modal('hide')
                 }
             })
         }
@@ -226,6 +228,7 @@
                     var table = $('#product_table').DataTable();
                     table.destroy();
                     all_products();
+                    $('#edit_product').modal('hide')
                 }
             }
         })
