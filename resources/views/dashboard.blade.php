@@ -5,7 +5,7 @@
 @section('content')
 <h3 class="text-center display-1 text-primary animate__animated animate__bounceInDown">Dashboard</h3>
 <div class="container">
-    <div class="row">
+    <div class="row m-5">
         <div class="col">
             <div class="card border-primary">
                 <div class="card-header d-flex justify-content-between align-items-center bg-primary">
@@ -28,10 +28,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
         </div>
     </div>
 </div>
