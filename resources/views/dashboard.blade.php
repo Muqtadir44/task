@@ -17,7 +17,6 @@
                 </div>
                 <div class="card-body">
                     {{-- All Records --}}
-
                     <table id="product_table" class="table table-bordered">
                         <thead>
                             <th>Id</th>
@@ -27,9 +26,12 @@
                             <th>Action</th>
                         </thead>
                     </table>
-                    {{-- <div id="records"></div> --}}
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
         </div>
     </div>
 </div>
@@ -109,7 +111,7 @@
 
 <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js" defer></script>
-
+{{$dataTable->scripts(attributes:['type' => 'module'])}}
 <script>
     //----------fetching records-------
 

@@ -12,7 +12,9 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
-
+    public function products(ProductsDataTable $dataTable){
+        return $dataTable->render('dashboard');
+    }
     // public function records(ProductsDataTable $dataTable){
     //     return $dataTable->render('records');
     // }

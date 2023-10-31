@@ -68,6 +68,7 @@ class ProductsDataTable extends DataTable
             //       ->width(60)
             //       ->addClass('text-center'),
             Column::make('id'),
+            Column::make('product_image'),
             Column::make('product_title'),
             Column::make('product_quantity'),
             Column::make('created_at'),

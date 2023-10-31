@@ -30,7 +30,7 @@ Route::controller(SettingController::class)->group(function(){
         Route::get('/delete','delete_profile')->name('delete.profile');
     });
 });
-
+Route::get('/products',[ProductController::class,'products'])->name('products.index');
 Route::get('/all_products',[ProductController::class,'all_products'])->name('all_products');
 
 Route::post('/add_product',[ProductController::class,'add_product'])->name('add_product');
